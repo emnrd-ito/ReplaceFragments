@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ListPreference
+        android:defaultValue="Always"
+        android:entries="@array/syncFrequency"
+        android:entryValues="@array/syncFrequencyValues"
+        android:summary="Select categories of movies"
+        android:title="Categories"
+        android:key="@string/pref_sync_frequency" />
+</PreferenceScreen>
+
