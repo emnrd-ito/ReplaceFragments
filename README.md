@@ -6,7 +6,7 @@ The exception is easily reproducible by starting the application and then rotati
 
 Disclaimer
 ----------
-This repository contains sample code intended to demonstrate an IllegatStateException
+This repository contains sample code intended to demonstrate an IllegalStateException
 
 License
 -------
