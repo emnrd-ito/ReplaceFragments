@@ -1,4 +1,4 @@
-Android RecyclerView Examples
+Android IllegalStateException Example
 -----------------------------
 
 This repository contains examples for using to demonstrate an IllegalStateException when using .replace with Fragments. 
