@@ -158,6 +158,16 @@
         android:background="@null"/>
 
     <!-- column 0, row 6 -->
+    <ImageView
+        android:id="@+id/fake_map"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_row="7"
+        android:layout_column="0"
+        android:layout_columnSpan="5"
+        android:src="@drawable/spain"
+        android:background="@null"/>
 
 
 </GridLayout>
