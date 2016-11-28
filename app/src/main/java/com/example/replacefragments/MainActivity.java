@@ -26,18 +26,15 @@ public class MainActivity extends AppCompatActivity implements
     // Used to store the last screen title. For use in {@link #restoreActionBar()}.
     private CharSequence mTitle;
 
-    private AppCompatActivity mActivity;
-
     // only load fragment on fresh start
     // don't reload when re-displaying or orientation change
     private boolean reloadFragment = true;
+    private FragmentChange mFragmentChange;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mActivity = this;
-
+        mFragmentChange = new FragmentChange(getSupportFragmentManager());
         // Data gets populated from SQLite here, usually
 
     } // end onCreate
@@ -104,9 +101,7 @@ public class MainActivity extends AppCompatActivity implements
         FragmentChangeEvent fragmentChangeEvent = new FragmentChangeEvent(null);
         fragmentChangeEvent.setPosition(position);
         fragmentChangeEvent.setVersion(version);
-        FragmentChange fragmentChange = FragmentChange.getInstance( getSupportFragmentManager());
-        fragmentChange.onFragmentChange(fragmentChangeEvent);
-
+        mFragmentChange.onFragmentChange(fragmentChangeEvent);
     }
 
     public void restoreActionBar() {
@@ -142,8 +137,7 @@ public class MainActivity extends AppCompatActivity implements
 
         FragmentChangeEvent fragmentChangeEvent = new FragmentChangeEvent(null);
         fragmentChangeEvent.setPosition(FRAGMENT_POP);
-        FragmentChange fragmentChange = FragmentChange.getInstance( getSupportFragmentManager());
-        boolean callSuper = fragmentChange.onFragmentPop(fragmentChangeEvent);
+        boolean callSuper = mFragmentChange.onFragmentPop(fragmentChangeEvent);
 
         if (callSuper) {
             super.onBackPressed();
@@ -152,48 +146,12 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-        @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putString("WORKAROUND_FOR_BUG_19917_KEY", "WORKAROUND_FOR_BUG_19917_VALUE");
+        outState.putString("WORKAROUND_FOR_BUG_19917_KEY", "");
         super.onSaveInstanceState(outState);
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
+    public FragmentChange getFragmentChange() {
+        return mFragmentChange;
     }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-    // Requires this line in the manifest file:
-    //     android:configChanges="orientation|screenSize"
-    // We override this to prevent the Activity from being restarted
-    // because restarting causes the fragment to be replaced causing this error:
-    //     IllegalStateException: Can not perform this action after onSaveInstanceState
-    // It is not necessary replace the fragment because the state is remembered by the OS.
-    // Simply overriding this method prevents the restart.
-    // See doc/IllegalStateException.txt for details on the error
-//    @Override
-//    public void onConfigurationChanged(Configuration newConfig) {
-//        super.onConfigurationChanged(newConfig);
-//
-//        isOrientationChange = true;
-//
-//        //setContentView(replacefragments.R.layout.activity_main);
-//
-//        // Checks the orientation of the screen
-//        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-//            Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show();
-//        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-//            Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show();
-//        }
-//    }
-
 }

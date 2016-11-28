@@ -34,21 +34,9 @@ public class FragmentChange implements FragmentChangeListener {
     private FragmentManager mFragmentManager;
     private String version = "0";
 
-    public static FragmentChange getInstance(FragmentManager fragmentManager) {
-        if (instance == null) {
-            instance = new FragmentChange(fragmentManager);
-        }
-        return instance;
-    }
-
-    // constructor
-    private FragmentChange(FragmentManager fragmentManager) {
+    public FragmentChange(FragmentManager fragmentManager) {
         mFragmentManager = fragmentManager;
     }
-
-//    public void setOnEventListener(FragmentChangeListener listener) {
-//        mFragmentChangeListener = listener;
-//    }
 
     @Override
     public void onFragmentChange(FragmentChangeEvent fragmentChangeEvent) {
