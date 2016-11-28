@@ -29,7 +29,7 @@ public class EmployeesRecyclerAdapter extends RecyclerView.Adapter<EmployeesRecy
 
     private final String TAG = "EmployeesRecyclerAdapte";
 
-    private ArrayList<RowItem> mRowItems;
+    private ArrayList<RowItem> mRowItems = new ArrayList<>();
 
     private AdapterView.OnItemClickListener mOnItemClickListener;
 
@@ -37,19 +37,12 @@ public class EmployeesRecyclerAdapter extends RecyclerView.Adapter<EmployeesRecy
 
     // Can contain all employees, employees at a location, or employees at a division
     private ArrayList<EmployeeGeneratedData> employeeArrayList;
+    private FragmentChange mFragmentChange;
 
-    public EmployeesRecyclerAdapter() {
-
-        Log.d(TAG, "constructor: " + this);
-        mRowItems = new ArrayList<RowItem>();
-        mContext = null;
-    }
-
-    public EmployeesRecyclerAdapter(Context context) {
-
+    public EmployeesRecyclerAdapter(Context context, FragmentChange fragmentChange) {
         Log.d(TAG, "constructor: " + this + " context: " + context);
         mContext = context;
-        mRowItems = new ArrayList<RowItem>();
+        mFragmentChange = fragmentChange;
     }
 
     /*
@@ -120,8 +113,7 @@ public class EmployeesRecyclerAdapter extends RecyclerView.Adapter<EmployeesRecy
             fragmentChangeEvent.setPosition(FragmentChange.FRAGMENT_INDIVIDUAL);
             fragmentChangeEvent.setEmployeeDataParcelable(employeeDataParcelable);
 
-            FragmentChange fragmentChange = FragmentChange.getInstance(fragmentManager);
-            fragmentChange.onFragmentChange(fragmentChangeEvent);
+            mFragmentChange.onFragmentChange(fragmentChangeEvent);
 
             mOnItemClickListener.onItemClick(null, itemHolder.itemView,
                     itemHolder.getAdapterPosition(), itemHolder.getItemId());

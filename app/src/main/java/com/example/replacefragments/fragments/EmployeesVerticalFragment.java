@@ -2,6 +2,7 @@ package com.example.replacefragments.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.replacefragments.MainActivity;
 import com.example.replacefragments.R;
 import com.example.replacefragments.adapters.EmployeesRecyclerAdapter;
 import com.example.replacefragments.decoration.DividerDecoration;
@@ -30,6 +32,7 @@ public class EmployeesVerticalFragment extends RecyclerFragment {
     private static String divisonString = "NoDivision";
 
     protected EmployeesRecyclerAdapter mAdapter;
+    private FragmentChange mFragmentChange;
 
     public EmployeesVerticalFragment () {
     }
@@ -91,6 +94,15 @@ public class EmployeesVerticalFragment extends RecyclerFragment {
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        // TODO: Define an interface to provide the FragmentChange.
+        // NB: this will crash with a ClassCastException with the fragment is used with the wrong
+        // context
+        mFragmentChange = ((MainActivity) getActivity()).getFragmentChange();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_recycler, container, false);
@@ -147,7 +159,6 @@ public class EmployeesVerticalFragment extends RecyclerFragment {
 
 //    @Override
     protected EmployeesRecyclerAdapter getAdapter() {
-
-        return new EmployeesRecyclerAdapter(getActivity());
+        return new EmployeesRecyclerAdapter(getActivity(), mFragmentChange);
     }
 }
